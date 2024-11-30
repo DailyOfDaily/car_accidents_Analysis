@@ -38,6 +38,16 @@ for row in data:
 user_input = input("전체기간, 특정년도(2005~2023), 특정 월(월-년도) 입력 : ")
 print()
 
+##추가한 코드(1)
+# 월을 계절로 매핑
+season_mapping = {
+    1: '겨울', 2: '겨울', 12: '겨울',
+    3: '봄', 4: '봄', 5: '봄',
+    6: '여름', 7: '여름', 8: '여름',
+    9: '가을', 10: '가을', 11: '가을'
+}
+##
+
 try:
     # 1) 전체 기간에 대한 그래프 출력
     if user_input == "전체기간":
@@ -56,6 +66,15 @@ try:
         # 월별 사고 및 사망 데이터에서 가장 많은 사고와 사망자를 찾음
         max_accidents_monthly = max(monthly_data.items(), key=lambda x: x[1]['accident'])
         max_deaths_monthly = max(monthly_data.items(), key=lambda x: x[1]['death'])
+
+         ##추가한 코드
+        # 가장 사고가 많았던 월의 계절 찾기
+        max_accident_month_str = f"{max_accidents_monthly[0][1]:02}-{max_accidents_monthly[0][0]}"
+        max_accident_season = season_mapping[max_accidents_monthly[0][1]]
+        #가장 사망자가 많았던 월의 계절 찾기
+        max_death_year, max_death_month = max_deaths_monthly[0]
+        max_death_season = season_mapping[max_deaths_monthly]
+        ##
 
         print(f"가장 많은 사고가 발생한 년도: {', '.join(map(str, max_accidents_years))} - 사고 수: {max_accidents}")
         print(f"가장 많은 사망자가 발생한 년도: {', '.join(map(str, max_deaths_years))} - 사망자 수: {max_deaths}")
@@ -208,9 +227,15 @@ try:
         min_deaths = min(deaths)
         min_deaths_month = months[deaths.index(min_deaths)]
 
+         # 가장 사고가 많았던 월의 계절 찾기
+        max_accident_season = season_mapping[max_accidents_month]
+        max_death_season = season_mapping[max_deaths_month]
+
         print(f"{year}년에서 가장 많은 사고가 발생한 월: {max_accidents_month} 월 - 사고 수: {max_accidents}")
+        print(f"그 월의 계절: {max_accident_season}")##추가한 코드##
         print(f"{year}년에서 가장 많은 사망자가 발생한 월: {max_deaths_month} 월 - 사망자 수: {max_deaths}")
         print(f"{year}년에서 가장 적은 사고가 발생한 월: {min_accidents_month} 월 - 사고 수: {min_accidents}")
+        print(f"그 월의 계절: {max_death_season}")##추가한 코드##
         print(f"{year}년에서 가장 적은 사망자가 발생한 월: {min_deaths_month} 월 - 사망자 수: {min_deaths}")
         print()
 
